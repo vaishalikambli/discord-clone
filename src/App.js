@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "./App.css";
-import Sidebar from './Sidebar/Sidebar';
-import Chat from './Chat/Chat';
+import Sidebar from "./Sidebar/Sidebar";
+import Chat from "./Chat/Chat";
 import { selectUser } from "./features/userSlice";
-import Login from './Login/Login';
+import Login from "./Login/Login";
 import { auth } from "./firebase";
 import { login, logout } from "./features/userSlice";
 
@@ -14,18 +14,17 @@ function App() {
 
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
-      console.log("user is ", authUser);
-      if(authUser){
+      if (authUser) {
         dispatch(
           login({
-          uid: authUser.uid,
-          photo: authUser.photoURL,
-          email: authUser.email,
-          displayName: authUser.displayName,
-        })
+            uid: authUser.uid,
+            photo: authUser.photoURL,
+            email: authUser.email,
+            displayName: authUser.displayName,
+          })
         );
         //theuser logged in
-      }else {
+      } else {
         dispatch(logout());
       }
     });
@@ -34,13 +33,13 @@ function App() {
   return (
     <div className="app">
       {user ? (
-      <React.Fragment>
-        <Sidebar />
-      <Chat />
-      </React.Fragment>      
-      ): (
+        <React.Fragment>
+          <Sidebar />
+          <Chat />
+        </React.Fragment>
+      ) : (
         <Login />
-      )}      
+      )}
     </div>
   );
 }
